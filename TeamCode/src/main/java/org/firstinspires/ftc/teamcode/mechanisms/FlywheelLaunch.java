@@ -11,12 +11,13 @@ public class FlywheelLaunch {
     private Servo kicker;
 
     // TUNABLE VALUES
-    private static final double FLYWHEEL_POWER = 1.00;
-    private static final double KICK_OUT = 0.6;
+    private static final double FLYWHEEL_POWER = 0.27;
+    private static final double KICK_OUT = 1.0;
     private static final double KICK_IN = 0.0;
 
-    private static final double SPINUP_TIME = 0.4;
-    private static final double KICK_TIME = 0.15;
+    private static final double SPINUP_TIME = 2.0;
+    private static final double SHOOT_TIME = 1.5;
+    private static final double KICK_TIME = 0.20;
 
     // STATE MACHINE
     private enum State {IDLE, SPINNING, KICKING}
@@ -55,7 +56,14 @@ public class FlywheelLaunch {
             case KICKING:
                 if (timer.seconds() >= KICK_TIME) {
                     kicker.setPosition(KICK_IN);
-                    shooter.setPower(0);
+
+                    while (timer.seconds() <= SHOOT_TIME) {
+                        shooter.setPower(1.0);
+                    }
+
+                    shooter.setPower(0.0);
+
+
                     state = State.IDLE;
                 }
                 break;
@@ -64,5 +72,20 @@ public class FlywheelLaunch {
                 break;
         }
     }
+
+    public void setSpeed() {
+        shooter.setPower(0.27);
+    }
+
+    public void setZero() {
+        shooter.setPower(0.0);
+    }
+
+    public void setKickOut() {
+        kicker.setPosition(KICK_OUT);
+    }
+
+    public void setKickIn() {
+        kicker.setPosition(KICK_OUT);
+    }
 }
-w

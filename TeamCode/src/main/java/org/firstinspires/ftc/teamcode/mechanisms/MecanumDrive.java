@@ -26,7 +26,7 @@ public class MecanumDrive {
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
+/*
         imu = hardwareMap.get(IMU.class, "imu");
 
         RevHubOrientationOnRobot.LogoFacingDirection logoDirection =
@@ -37,8 +37,9 @@ public class MecanumDrive {
         RevHubOrientationOnRobot orientationOnRobot = new
                 RevHubOrientationOnRobot(logoDirection, usbDirection);
         imu.initialize(new IMU.Parameters(orientationOnRobot));
+ */
     }
-
+/*
     // This routine drives the robot field relative
     public void driveFieldRelative(double forward, double right, double rotate) {
         // First, convert direction being asked to drive to polar coordinates
@@ -56,6 +57,7 @@ public class MecanumDrive {
         // Finally, call the drive method with robot relative forward and right amounts
         this.drive(newForward, newRight, rotate);
     }
+ */
 
     // This drives the robot
     public void drive(double forward, double right, double rotate) {
@@ -84,5 +86,15 @@ public class MecanumDrive {
         frontRight.setPower(maxSpeed * (frontRightPower / maxPower));
         backLeft.setPower(maxSpeed * (backLeftPower / maxPower));
         backRight.setPower(maxSpeed * (backRightPower / maxPower));
+    }
+
+    public int getLeftEncoder() {
+        // Returns the position of the Parallel dead-wheel encoder
+        return frontLeft.getCurrentPosition();
+    }
+
+    public int getRightEncoder() {
+        // Returns the position of the Perpendicular dead-wheel encoder
+        return frontRight.getCurrentPosition();
     }
 }
